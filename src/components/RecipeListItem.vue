@@ -4,7 +4,7 @@
       img.media-figure(v-bind:src="imageUrl" @click="toggleSelected")
       .media-body
         h3
-          a(v-bind:href="url" style="color: #0275d8;") {{name || url}}
+          a(v-bind:href="url" style="color: #0275d8;" target="_blank") {{name || url}}
           | &nbsp;
           router-link(:to="{name: 'RecipeEdit', params: { recipeId: id }}" style="color: #f0ad4e;") ✎
         p
