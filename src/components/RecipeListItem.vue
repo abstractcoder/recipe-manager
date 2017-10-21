@@ -7,8 +7,11 @@
           a(v-bind:href="url" style="color: #0275d8;") {{name || url}}
           | &nbsp;
           router-link(:to="{name: 'RecipeEdit', params: { recipeId: id }}" style="color: #f0ad4e;") ✎
-        p(v-if="calories")
-          em {{calories}} cal
+        p
+          em(v-if="calories") {{calories}} cal&nbsp;
+          span(v-if="time.total")
+            | ⏱&nbsp;
+            em {{time.total}}
         p {{description}}
 </template>
 
@@ -29,7 +32,7 @@ export default {
       }
     }
   },
-  props: ['id', 'url', 'name', 'description', 'imageUrl', 'foods', 'servings'],
+  props: ['id', 'url', 'name', 'description', 'imageUrl', 'foods', 'servings', 'time'],
   methods: {
     destroy () {
       this.$store.dispatch('REMOVE_RECIPE', {recipe: this.$data})

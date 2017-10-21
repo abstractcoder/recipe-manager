@@ -20,8 +20,6 @@ export default new Vuex.Store({
               regex.test(recipe.description) ||
               regex.test(recipe.url) ||
               (recipe.foods || []).filter(food => regex.test(food.food_name)).length > 0
-      }).sort(function (a, b) {
-        return a.createdAt < b.createdAt
       })
     },
     getRecipeById: (state, getters) => (id) => {
@@ -56,7 +54,7 @@ export default new Vuex.Store({
         recipe.ingredients = data.ingredients
         recipe.servings = data.servings
 
-        if (recipe.ingredients) {
+        if (recipe.ingredients.length > 0) {
           const iresp = await nutritionix.getIngredientsFromString(data.ingredients.join('\n'))
           recipe.foods = iresp.data.foods
         }

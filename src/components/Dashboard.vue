@@ -34,7 +34,9 @@ export default {
   },
   computed: {
     filteredRecipes () {
-      return this.$store.getters.filteredRecipes(this.query)
+      return this.$store.getters.filteredRecipes(this.query).sort(function (a, b) {
+        return new Date(b.createdAt) - new Date(a.createdAt)
+      })
     }
   }
 }

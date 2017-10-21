@@ -2,14 +2,14 @@
   div
     .recipe-list
       ul
-        recipe-list-item(v-for="recipe in recipes" v-bind="recipe" :key="recipe.url" @selectRecipe="selectRecipe" @unselectRecipe="unselectRecipe")
+        recipe-list-item(v-for="recipe in recipes" v-bind="recipe" :key="recipe.id" @selectRecipe="selectRecipe" @unselectRecipe="unselectRecipe")
 
     .shopping-list(v-if="selectedRecipes.length > 0")
       h3 Shopping List
       ul
         li(v-for="(weight, food) in selectedFoods")
           span {{food}}&nbsp;
-          strong {{weight}}g / {{(weight/28.3495).toFixed(1)}}oz
+          strong {{weight.toFixed(1)}}g / {{(weight/28.3495).toFixed(1)}}oz
 </template>
 
 <script>
