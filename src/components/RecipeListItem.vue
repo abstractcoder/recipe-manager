@@ -1,10 +1,9 @@
 <template lang="pug">
-  li
+  li(:style="styleObject")
     .media
-      img.media-figure(v-bind:src="imageUrl")
+      img.media-figure(v-bind:src="imageUrl" @click="toggleSelected")
       .media-body
         h3
-          input(type="checkbox")
           a(v-bind:href="url" style="color: #0275d8;") {{name || url}}
           | &nbsp;
           router-link(:to="{name: 'RecipeEdit', params: { recipeId: id }}" style="color: #f0ad4e;") ✎
@@ -16,10 +15,27 @@
 <script>
 export default {
   name: 'recipe-list-item',
+  data () {
+    return {
+      selected: false
+    }
+  },
+  watch: {
+    selected () {
+      if (this.selected) {
+        this.$emit('selectRecipe', this.$props)
+      } else {
+        this.$emit('unselectRecipe', this.$props)
+      }
+    }
+  },
   props: ['id', 'url', 'name', 'description', 'imageUrl', 'foods', 'servings'],
   methods: {
     destroy () {
       this.$store.dispatch('REMOVE_RECIPE', {recipe: this.$data})
+    },
+    toggleSelected () {
+      this.selected = !this.selected
     }
   },
   computed: {
@@ -30,19 +46,29 @@ export default {
       } else {
         return null
       }
+    },
+    styleObject () {
+      return {
+        background: (this.selected ? '#FFFFE0' : '#fff')
+      }
     }
   }
 }
 </script>
 
 <style scoped>
+  li {
+    border: 1px solid #ccc;
+  }
+
   .media {
     display: flex;
     align-items: flex-start;
     max-height: 160px;
     overflow: hidden;
     text-overflow: ellipsis;
-    margin-bottom: 20px;
+    margin: 10px;
+    position: relative;
   }
 
   .media-figure {
@@ -54,8 +80,11 @@ export default {
   }
 
   img {
-    max-height: 160px;
+    height: 160px;
+    width: 215px;
     display: inline-block;
+    object-fit: cover;
+    cursor: pointer;
   }
   h3 { margin: 0; }
   p { margin: 0px; }
@@ -65,6 +94,9 @@ export default {
     text-decoration: none;
   }
   input[type=checkbox] {
-    padding-bottom: 30px;
+    cursor: pointer;
+    position: absolute;
+    top: 5px;
+    left: 5px;
   }
 </style>

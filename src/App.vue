@@ -18,4 +18,13 @@ export default {
   color: #2c3e50;
   margin-top: 60px;
 }
+
+ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+li {
+  display: block;
+}
 </style>

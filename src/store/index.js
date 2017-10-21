@@ -18,7 +18,8 @@ export default new Vuex.Store({
       return state.recipes.filter(function (recipe) {
         return regex.test(recipe.name) ||
               regex.test(recipe.description) ||
-              regex.test(recipe.url)
+              regex.test(recipe.url) ||
+              (recipe.foods || []).filter(food => regex.test(food.food_name)).length > 0
       }).sort(function (a, b) {
         return a.createdAt < b.createdAt
       })
