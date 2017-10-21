@@ -54,7 +54,7 @@ export default new Vuex.Store({
         recipe.ingredients = data.ingredients
         recipe.servings = data.servings
 
-        if (recipe.ingredients.length > 0) {
+        if (recipe.ingredients && recipe.ingredients.length > 0) {
           const iresp = await nutritionix.getIngredientsFromString(data.ingredients.join('\n'))
           recipe.foods = iresp.data.foods
         }
